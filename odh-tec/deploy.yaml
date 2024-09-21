@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: odh-tec
+    app.kubernetes.io/component: odh-tec
+    app.kubernetes.io/instance: odh-tec
+  name: odh-tec  
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: odh-tec
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        deployment: odh-tec
+    spec:
+      containers:
+      - envFrom:
+        - secretRef:
+            name: aws-connection-my-storage
+        image: quay.io/rh-aiservices-bu/odh-tec:latest
+        imagePullPolicy: IfNotPresent
+        name: odh-tec
+        ports:
+        - containerPort: 8080
+          protocol: TCP

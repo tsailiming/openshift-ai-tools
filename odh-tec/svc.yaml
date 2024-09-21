@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: odh-tec
+    app.kubernetes.io/component: odh-tec
+    app.kubernetes.io/instance: odh-tec
+  name: odh-tec
+spec:  
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: 8888-tcp
+    port: 8888
+    protocol: TCP
+    targetPort: 8888
+  selector:
+    deployment: odh-tec
+  sessionAffinity: None
+  type: ClusterIP

@@ -1,0 +1,19 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: odh-tec
+    app.kubernetes.io/component: odh-tec
+    app.kubernetes.io/instance: odh-tec
+  name: odh-tec  
+spec:
+  port:
+    targetPort: 8888-tcp
+  tls:
+    insecureEdgeTerminationPolicy: Redirect
+    termination: edge
+  to:
+    kind: Service
+    name: odh-tec
+    weight: 100
+  wildcardPolicy: None
